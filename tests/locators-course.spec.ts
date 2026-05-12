@@ -1,3 +1,5 @@
+// Ex 1: Interacțiunea cu formularul de tip Block
+
 import { test, expect } from '@playwright/test';
 
 test('interactiune cu Block form', async ({ page }) => {
@@ -25,3 +27,52 @@ test('interactiune cu Block form', async ({ page }) => {
   await expect(blockForm.getByPlaceholder('First Name')).toHaveValue('Ada');
   await expect(blockForm.getByPlaceholder('Last Name')).toHaveValue('Lovelace');
 });
+
+
+
+
+
+
+// Ex 2: Exercițiul nou cu filtrare după elementul copil (textarea)
+test('filtrare card dupa textarea', async ({ page }) => {
+    await page.goto('http://localhost:4200/pages/forms/layouts');
+  
+    // Aplicăm logica de filtrare din exercițiu
+    const cardWithTextarea = page.locator('nb-card').filter({
+      has: page.locator('textarea')
+    });
+  
+    // Aserțiunile cerute în task
+    await expect(cardWithTextarea).toHaveCount(1);
+    await expect(cardWithTextarea.locator('nb-card-header')).toHaveText('Form without labels');
+    
+    // Opțional: Poți adăuga și o interacțiune mică pentru a confirma că e activ
+    await cardWithTextarea.locator('textarea').fill('Test finalizat cu succes!');
+  });
+
+
+
+
+  // Ex 3: Lucrul cu liste de elemente (first, last, count)
+
+  test('lucru cu multiple campuri de email', async ({ page }) => {
+    await page.goto('http://localhost:4200/pages/forms/layouts');
+  
+    // 1. Definim locatorul generic pentru toate input-urile de tip email
+    const emailFields = page.locator('input[type="email"]');
+  
+    // 2. Task (a): Verificăm că există exact 4 astfel de câmpuri
+    await expect(emailFields).toHaveCount(4);
+  
+    // 3. Task (b): Completăm PRIMUL câmp
+    const firstEmail = emailFields.first();
+    await firstEmail.fill('first@email.com');
+  
+    // 4. Task (c): Completăm ULTIMUL câmp
+    const lastEmail = emailFields.last();
+    await lastEmail.fill('last@email.com');
+  
+    // 5. Task (d): Verificăm că ambele valori au fost setate corect
+    await expect(firstEmail).toHaveValue('first@email.com');
+    await expect(lastEmail).toHaveValue('last@email.com');
+  });
