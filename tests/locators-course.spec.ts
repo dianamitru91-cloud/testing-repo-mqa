@@ -16,8 +16,6 @@ test('interactiune cu Block form', async ({ page }) => {
   await blockForm.getByPlaceholder('Last Name').fill('Lovelace');
   await blockForm.getByPlaceholder('Website').fill('https://ada.dev');
 
-  // NOTĂ: Am eliminat checkbox-ul deoarece acesta se află în "Basic form", nu aici.
-
   // 4. Apăsăm butonul de Submit
   // Căutăm butonul doar în interiorul acestui card
   await blockForm.getByRole('button', { name: "Submit" }).click();
