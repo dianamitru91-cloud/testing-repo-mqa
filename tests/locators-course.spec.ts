@@ -7,11 +7,9 @@ test('interactiune cu Block form', async ({ page }) => {
   await page.goto('http://localhost:4200/pages/forms/layouts');
 
   // 2. Localizăm cardul "Block form"
-  // Folosim hasText pentru a identifica exact containerul corect
   const blockForm = page.locator('nb-card').filter({ hasText: "Block form" });
 
   // 3. Completăm câmpurile de text
-  // Folosim placeholder-ele deoarece sunt unice în acest formular
   await blockForm.getByPlaceholder('First Name').fill('Ada');
   await blockForm.getByPlaceholder('Last Name').fill('Lovelace');
   await blockForm.getByPlaceholder('Website').fill('https://ada.dev');
@@ -44,7 +42,7 @@ test('filtrare card dupa textarea', async ({ page }) => {
     await expect(cardWithTextarea).toHaveCount(1);
     await expect(cardWithTextarea.locator('nb-card-header')).toHaveText('Form without labels');
     
-    // Opțional: Poți adăuga și o interacțiune mică pentru a confirma că e activ
+    // Opțional: Adăugam și o interacțiune mică pentru a confirma că e activ
     await cardWithTextarea.locator('textarea').fill('Test finalizat cu succes!');
   });
 
